@@ -1,18 +1,20 @@
 import dotnev from 'dotenv'
-
-import express from 'express';
+const port=process.env.PORT || 3000;
+import { app } from './app.js';
 import dbConnection from './db/config.js';
 
-const app=express();
-const port=process.env.PORT || 3000;
 dotnev.config();
-dbConnection();
-
-app.get('/',(req,res)=>{
-    res.send("Hello");
+dbConnection()
+.then(()=>{
+    app.listen(port,()=>{
+        console.log(`Server running on port ${port}`);
+    })
+    
+})
+.catch((error)=>{
+    console.log("Database connection failed :-> " ,error);
 })
 
-app.listen(port,()=>{
-    console.log(`Server running on port ${port}`);
-})
+
+
 
