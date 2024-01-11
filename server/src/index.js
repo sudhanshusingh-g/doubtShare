@@ -1,7 +1,13 @@
-const exress=require("express");
+import dotnev from 'dotenv'
 
-const app=exress();
+import express from 'express';
+import dbConnection from './db/config.js';
+
+const app=express();
 const port=process.env.PORT || 3000;
+dotnev.config();
+dbConnection();
+
 app.get('/',(req,res)=>{
     res.send("Hello");
 })
