@@ -1,112 +1,169 @@
-import { ArrowRight } from "lucide-react";
+
+import  { useState } from 'react';
+
 import { Link } from "react-router-dom";
 
-export default function Signup() {
+const SignupForm = () => {
+  const [formData, setFormData] = useState({
+    fullname: '',
+    email: '',
+    password: '',
+    languages: [],
+    role: '',
+    grade: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLanguagesChange = (e) => {
+    const selectedLanguages = Array.from(e.target.selectedOptions, (option) => option.value);
+    setFormData({
+      ...formData,
+      languages: selectedLanguages,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add logic to handle form submission (e.g., API call)
+    console.log('Form submitted:', formData);
+  };
+
   return (
-    <section>
-      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-          <div className="mb-2 flex justify-center"></div>
-          <h2 className="text-center text-2xl font-bold leading-tight text-black">
-            Create an account
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
+      <h2 className="text-center text-2xl font-bold leading-tight text-black">
+            Sign up to create an account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 ">
+      <p className="mt-2 text-center text-sm text-gray-600 ">
             Already have an account?{" "}
             <Link
-              to="/signup"
+              to="/signin"
               title=""
               className="font-semibold text-black transition-all duration-200 hover:underline"
             >
-              Sign in
+              Login
             </Link>
           </p>
-          <form action="#" method="POST" className="mt-8">
-            <div className="space-y-5">
-            <div>
-                
-                <label
-                  htmlFor=""
-                  className="text-base font-medium text-gray-900"
-                >
-                  {" "}
-                  Name{" "}
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="text"
-                    placeholder="Name"
-                  ></input>
-                </div>
-              </div>
-            <div>
-                
-                <label
-                  htmlFor=""
-                  className="text-base font-medium text-gray-900"
-                >
-                  {" "}
-                  Email address{" "}
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="email"
-                    placeholder="Email"
-                  ></input>
-                </div>
-              </div>
-              <div>
-                
-                <label
-                  htmlFor=""
-                  className="text-base font-medium text-gray-900"
-                >
-                  {" "}
-                  Password{" "}
-                </label>
-                <div className="mt-2">
-                  <input
-                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    placeholder="Password"
-                  ></input>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor=""
-                    className="text-base font-medium text-gray-900"
-                  >
-                    {" "}
-                    Confirm Password{" "}
-                  </label>
-                  
-                </div>
-                <div className="mt-2">
-                  <input
-                    className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    placeholder="Confirm Password"
-                  ></input>
-                </div>
-              </div>
-
-
-              
-              <div>
-                <button
-                  type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-blue-700"
-                >
-                  Log In <ArrowRight className="ml-2" size={16} />
-                </button>
-              </div>
-            </div>
-          </form>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="fullname" className="block text-sm font-medium text-gray-600">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            value={formData.fullname}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          />
         </div>
-      </div>
-    </section>
+
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="languages" className="block text-sm font-medium text-gray-600">
+            Select Languages (Hold Ctrl/Cmd to select multiple):
+          </label>
+          <select
+            id="languages"
+            name="languages"
+            multiple
+            value={formData.languages}
+            onChange={handleLanguagesChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          >
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Marathi">Marathi</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="role" className="block text-sm font-medium text-gray-600">
+            Select Role:
+          </label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          >
+            <option value="">Select Role</option>
+            <option value="Student">Student</option>
+            <option value="Tutor">Tutor</option>
+          </select>
+        </div>
+
+        {formData.role === 'Student' && (
+          <div className="mb-4">
+            <label htmlFor="grade" className="block text-sm font-medium text-gray-600">
+              Grade:
+            </label>
+            <input
+              type="text"
+              id="grade"
+              name="grade"
+              value={formData.grade}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md"
+              required={formData.role === 'Student'}
+              disabled={formData.role !== 'Student'}
+            />
+          </div>
+        )}
+
+        <div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+    </div>
   );
-}
+};
+
+export default SignupForm;
