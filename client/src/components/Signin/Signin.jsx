@@ -47,14 +47,7 @@ export default function Signin() {
                     {" "}
                     Password{" "}
                   </label>
-                  <a
-                    href="#"
-                    title=""
-                    className="text-sm font-semibold text-black hover:underline"
-                  >
-                    {" "}
-                    Forgot password?{" "}
-                  </a>
+                  
                 </div>
                 <div className="mt-2">
                   <input
@@ -69,7 +62,7 @@ export default function Signin() {
                   type="button"
                   className="inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-blue-700"
                 >
-                  Get started <ArrowRight className="ml-2" size={16} />
+                  Log In <ArrowRight className="ml-2" size={16} />
                 </button>
               </div>
             </div>
