@@ -8,13 +8,8 @@ const registerUser = asyncHandler(async (req, res) => {
     // })
 
 
-
-
-
-
     // get user details
     const { fullname, email, password, languages, role } = req.body
-    // console.log("languages :",languages);
     const userData = {
         fullname,
         email,
@@ -28,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "fullname is required");
     }
     // check user already exists
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ email }]
     })
     if (existedUser) {
@@ -36,19 +31,28 @@ const registerUser = asyncHandler(async (req, res) => {
     }
     // create user object -create entry in db
     const user = await User.create({
-        userData
+        ...userData
     })
     // remove password and refresh token field from response
-    const createdUSer = await User.findById(user._id).select("-password -refreshToken")
+    let projection = { password: 0, refreshToken: 0 };
+
+
+    if (role === 'Student') {
+        projection.grade= 1;
+    }
+
+    const createdUser = await User.findById(user._id).select(projection);
+
+
 
 
     // check for user creation
-    if (!createdUSer) {
+    if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering user");
     }
     // return response
     return res.status(201).json(
-        new ApiResponse(200, createdUSer, "User created successfully")
+        new ApiResponse(200, createdUser, "User created successfully")
     )
 })
 
